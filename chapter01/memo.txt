@@ -1,0 +1,17 @@
+# 以下, ボツになったコード（bi-gramにしか対応していないため）
+# def word_bi_gram(words):
+#     # split関数を用いて単語毎に分割してリストに格納する
+#     word_list = words.split(' ')
+#     print(word_list)
+#
+#     n_gram_list = []
+#
+#     for i in range(len(word_list)-1):
+#         n_gram_list.append(word_list[i] + word_list[i+1])
+#
+#     return n_gram_list
+#
+#
+# s = "I am an NLPer"
+# n_gram = word_n_gram(s)
+# print(n_gram)
