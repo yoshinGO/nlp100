@@ -3,7 +3,7 @@
 
 
 def template_sentence(x, y, z):
-    return ("{time}時の{temperature}は{value}".format(time=x, temperature=y, value=z))
+    return ('{time}時の{temperature}は{value}'.format(time=x, temperature=y, value=z))
 
 
-print(template_sentence(x=12, y="気温", z=22.4))
+print(template_sentence(x=12, y='気温', z=22.4))

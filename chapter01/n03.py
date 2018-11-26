@@ -16,7 +16,7 @@ def del_symbols(text, symbols):
 
 if __name__ == '__main__':
     # 与えられた英文
-    seq = "Now I need a drink, alcoholic of course, after the heavy lectures involving quantum mechanics."
+    seq = 'Now I need a drink, alcoholic of course, after the heavy lectures involving quantum mechanics.'
 
     # カンマとピリオドを削除
     seq = del_symbols(seq, [',', '.'])

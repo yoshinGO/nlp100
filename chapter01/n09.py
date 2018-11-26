@@ -33,5 +33,5 @@ if __name__ == "__main__":
 
     print(seq)
     new_seq = " ".join(shufflewords_list)
-    print("文字の順番をバラバラにしました。")
+    print('文字の順番をバラバラにしました。')
     print(new_seq)

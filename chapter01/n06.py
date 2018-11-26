@@ -27,15 +27,15 @@ def difference_two_set(x, y):
 
 # main関数
 if __name__ == "__main__":
-    seq1 = "paraparaparadise"
-    seq2 = "paragraph"
+    seq1 = 'paraparaparadise'
+    seq2 = 'paragraph'
     # seq1, seq2それぞれの文字bi-gramを生成
     X = make_n_gram(seq1, 2)
     Y = make_n_gram(seq2, 2)
-    print("X : ", X)
-    print("Y : ", Y)
-    print("XとYの和集合 : ", union_two_set(X, Y))
-    print("XとYの積集合 : ", intersection_two_set(X, Y))
-    print("XとYの差集合 : ", difference_two_set(X, Y))
-    print("Xにseは含まれているか : ", 'se' in X)
-    print("Yにseは含まれているか : ", 'se' in Y)
+    print('X : ', X)
+    print('Y : ', Y)
+    print('XとYの和集合 : ', union_two_set(X, Y))
+    print('XとYの積集合 : ', intersection_two_set(X, Y))
+    print('XとYの差集合 : ', difference_two_set(X, Y))
+    print('Xにseは含まれているか : ', 'se' in X)
+    print('Yにseは含まれているか : ', 'se' in Y)

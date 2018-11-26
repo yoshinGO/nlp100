@@ -3,12 +3,12 @@
 
 
 def make_n_gram(seq, n, unit):
-    if unit == "word":
+    if unit == 'word':
         seq = seq.split()
     return [list(seq[i:i + n]) for i in range(len(seq) - n + 1)]
 
 
 if __name__ == "__main__":
-    example_sentence = "I am an NLPer"
-    print("word bi-gram: ", make_n_gram(example_sentence, 2, "word"))
-    print("character bi-gram:", make_n_gram(example_sentence, 2, "char"))
+    example_sentence = 'I am an NLPer'
+    print('word bi-gram: ', make_n_gram(example_sentence, 2, 'word'))
+    print('character bi-gram:', make_n_gram(example_sentence, 2, 'char'))

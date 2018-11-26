@@ -17,7 +17,7 @@ def make_word_list(text):
 
 
 # 与えられた英文
-seq = "Hi He Lied Because Boron Could Not Oxidize Fluorine. New Nations Might Also Sign Peace Security Clause. Arthur King Can."
+seq = 'Hi He Lied Because Boron Could Not Oxidize Fluorine. New Nations Might Also Sign Peace Security Clause. Arthur King Can.'
 
 # ピリオドを削除
 seq = del_symbols(seq, ['.'])
@@ -35,7 +35,6 @@ for i, word in enumerate(words):
         periodic_table_list.append(word[:2])
 
 # リストが完成したので, 単語とその単語の位置を対応させた辞書を作成する
-periodic_table_dict = {}
 periodic_table_dict = {word: i+1 for i, word in enumerate(periodic_table_list)}
 
 print(periodic_table_dict)

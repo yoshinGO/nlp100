@@ -10,12 +10,12 @@ import re
 
 
 def cipher(str):
-    p = re.compile("[a-z]")
+    p = re.compile('[a-z]')
     code = []
     for ch in str:
         code.append(chr(219 - ord(ch)) if p.match(ch) else ch)
     return "".join(code)
 
 
-print(cipher("this is a test message of the question n08."))
-print(cipher("gsrh rh z gvhg nvhhztv lu gsv jfvhgrlm m08."))
+print(cipher('this is a test message of the question n08.'))
+print(cipher('gsrh rh z gvhg nvhhztv lu gsv jfvhgrlm m08.'))
