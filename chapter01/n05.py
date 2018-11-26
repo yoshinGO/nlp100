@@ -5,8 +5,6 @@
 def make_n_gram(seq, n, unit):
     if unit == "word":
         seq = seq.split()
-    elif unit == "char":
-        seq = seq
     return [list(seq[i:i + n]) for i in range(len(seq) - n + 1)]
 
 
