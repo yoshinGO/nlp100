@@ -6,10 +6,8 @@ from sys import argv
 
 def count_len():
     with open(argv[1]) as f:
-        counts = sum(1 for line in f)
-    return counts
+        return sum(1 for line in f)
 
 
 if __name__ == '__main__':
-    line_counts = count_len()
-    print(line_counts)
+    print(count_len())
