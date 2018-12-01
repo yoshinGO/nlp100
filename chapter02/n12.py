@@ -5,9 +5,9 @@ from sys import argv
 
 
 if __name__ == '__main__':
-    with open(argv[1], 'w') as f, open(argv[2], 'w') as g:
-        for line in open(argv[3]):
-            element = line.split()
+    with open(argv[1], 'w') as f, open(argv[2], 'w') as g, open(argv[3], 'r') as h:
+        for line in h:
+            element = line.strip().split()
             f.write(element[0] + '\n')
             g.write(element[1] + '\n')
 """
