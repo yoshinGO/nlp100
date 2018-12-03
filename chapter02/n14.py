@@ -6,7 +6,7 @@ from sys import argv
 
 
 if __name__ == '__main__':
-    n = int(argv[1])
+    n = int(argv[1])  # 表示する行数
     with open(argv[2], 'r') as f:
         while n > 0:  # n回繰り返す
             print(f.readline(), end='')  # readline関数で１行ずつ取り出す
