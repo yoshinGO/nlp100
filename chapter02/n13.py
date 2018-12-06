@@ -11,6 +11,6 @@ with open(argv[1], 'r') as f, open(argv[2], 'r') as g, open(argv[3], 'w') as h:
     elements2 = g.read().strip().split()  # 要素をリストで管理
     # ファイルへの書き込み
     for ele1, ele2 in zip(elements1, elements2):
-        h.write(ele1 + '\t' + ele2 + '\n')
+        h.write(f'{ele1}\t{ele2}\n')
 
 #  paste col1.txt col2.txt
