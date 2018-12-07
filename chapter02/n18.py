@@ -10,9 +10,8 @@ if __name__ == '__main__':
         # 整列したいデータをリストに格納する
         elements_list = f.readlines()
         # 3コラム目の数値でsortedするために二次元のリストにする
-        list_elements = [ele.split() for ele in elements_list]
-        ascending_elements = sorted(list_elements, key=itemgetter(2))
-        for line in ascending_elements:
+        elements = [ele.split() for ele in elements_list]
+        for line in sorted(elements, key=itemgetter(2)):
             add_elements = '\t'.join(line)
             g.write(add_elements + '\n')  # 数値の逆順で整列したものをファイルに書き出す
 
