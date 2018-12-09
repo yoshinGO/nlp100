@@ -14,6 +14,6 @@ with gzip.open('../data/jawiki-country.json.gz', 'rt', encoding='utf-8') as data
         country_info = json.loads(line)
         if country_info['title'] == 'イギリス':
             print(country_info['text'])
-            with open('Briten.txt', 'w', encoding='utf-8') as result:
+            with open('Britain.txt', 'w', encoding='utf-8') as result:
                 result.write(country_info['text'])
             break
