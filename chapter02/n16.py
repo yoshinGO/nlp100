@@ -21,5 +21,3 @@ with open(argv[2], 'r') as f:
             file = lines[line_index:line_index+lines_length_per_file]
             g.writelines(file)
             line_index += lines_length_per_file
-
-# split -l 3 ../tmp/merge_text.txt hoge
