@@ -7,10 +7,9 @@ from operator import itemgetter
 
 if __name__ == '__main__':
     with open(argv[1], 'r') as f, open(argv[2], 'w') as g:
-        # 整列したいデータをリストに格納する
-        elements_list = f.readlines()
-        # 3コラム目の数値でsortedするために二次元のリストにする
-        for line in sorted([ele.split() for ele in elements_list], key=itemgetter(2)):
+        # 3コラム目の数値でsortedするために内包表記を使って二次元のリストにする
+        # 各行[県名, 市町村名, 気温, 日付]で管理されているファイルをループ
+        for line in sorted([ele.split() for ele in f.readlines()], key=itemgetter(2)):
             g.write('\t'.join(line) + '\n')  # 数値の逆順で整列したものをファイルに書き出す
 
 # sort -k 3 -t ' ' ../data/highttemp.txt
