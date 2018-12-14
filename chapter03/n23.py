@@ -1,7 +1,7 @@
 """
 記事中に含まれるセクション名とそのレベル（例えば"== セクション名 =="なら1）を表示せよ
 """
-# config: utf-8
+# condig: utf-8
 import gzip
 import json
 import re
