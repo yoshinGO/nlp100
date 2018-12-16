@@ -51,14 +51,14 @@ patten = re.compile(r'''
     )  # グループ終了
     ''', re.MULTILINE + re.VERBOSE + re.DOTALL)
 
-# フィールドメイトあたいの抽出
+# フィールド名と値の抽出
 fields = patten.findall(contents[0])
 
 # 辞書にセット
 result = {}
 keys_test = []  # 確認用の出現順フィールド名リスト
 for field in fields:
-    result[field[0]] = field[1]  # fieldはjson形式であり、そのキーとバリューを辞書型で管理
+    result[field[0]] = field[1]  # キャプチャしたものを[0]や[1]でアクセス
     keys_test.append(field[0])
 
 # 確認のため表示（確認しやすいようにkeys_testを使ってフィールド名の出現順にソート）
