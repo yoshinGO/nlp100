@@ -38,7 +38,7 @@ def remove_markup(target):
 
     # 除去対象の正規表現のコンパイル
     pattern = re.compile(r'''
-    \'{2,5} # 2~5個の'(シングルクウォーテーション)
+    \'{2,5} # 2~5個の'(シングルクォーテーション)
     ''', re.MULTILINE + re.VERBOSE)
 
     # 空文字に置換
