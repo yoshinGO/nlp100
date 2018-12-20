@@ -16,8 +16,8 @@ def del_symbols(seq, symbols):
     return seq
 
 
+# 先頭と末尾を除いた文字列の順序をランダムに入れ替える
 def shuffle_word(word):
-    # 先頭と末尾を除いた文字列の順序をランダムに入れ替える
     random_center_sentence = ''.join(random.sample(word[1:len(word)-1], len(word)-2))
     return f'{word[0]}{random_center_sentence}{word[-1]} '
 
