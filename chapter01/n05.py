@@ -5,7 +5,7 @@
 def make_n_gram(seq, n, unit):
     if unit == 'word':
         seq = seq.split()
-    return [list(seq[i:i + n]) for i in range(len(seq) - n + 1)]
+    return [list(seq[i:(i+n)]) for i in range(len(seq) - n + 1)]
 
 
 if __name__ == "__main__":
