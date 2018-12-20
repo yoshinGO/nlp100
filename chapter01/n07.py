@@ -4,8 +4,8 @@
 """
 
 
-def make_char_str(x, y, z):
+def make_template_sentence(x, y, z):
     return f'{x}時の{y}は{z}'
 
 
-print(make_char_str(x=12, y="気温", z=22.4))
+print(make_char_str(x=12, y='気温', z=22.4))
