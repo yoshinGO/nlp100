@@ -4,34 +4,34 @@
 ただし，長さが４以下の単語は並び替えないこととする．
 適当な英語の文（例えば'I couldn't believe that I could actually understand
 what I was reading : the phenomenal power of the human mind .'）を与え，
-その実行結果を確認せよ．
+その実行結果を確認せよ
 """
 
 import random
 
 
-def element_shuffle(ele):
-    # 0番目と最後だけ抜く
-    middle_characters = list(ele[1:-1])
-    random.shuffle(middle_characters)
-    middle_string = "".join(middle_characters)
-    return ele[0] + middle_string + ele[-1]
+def del_symbols(seq, symbols):
+    for symbol in symbols:
+        seq = seq.replace(symbol, '')
+    return seq
 
 
-if __name__ == "__main__":
+def shuffle_word(word):
+    # 先頭と末尾を除いた文字列の順序をランダムに入れ替える
+    random_center_sentence = ''.join(random.sample(word[1:len(word)-1], len(word)-2))
+    return f'{word[0]}{random_center_sentence}{word[-1]} '
 
-    seq = "I couldn't believe that I could actually understandwhat I was reading : the phenomenal power of the human mind ."
 
-    words = seq.split()
-    shufflewords_list = []  # バラバラになった単語を格納s流
-    # 5字以上の単語の語順をバラバラにする
-    for i, word in enumerate(words):
+if __name__ == '__main__':
+    example_sentence = 'I couldn\'t believe that I could actually understand \
+    what I was reading : the phenomenal power of the human mind .'
+
+    shuffle_word_list = []
+    for word in example_sentence.split():
         if len(word) > 4:
-            shufflewords_list.append(element_shuffle(word))
+            shuffle_word_list.append(shuffle_word(word))
         else:
-            shufflewords_list.append(word)
+            shuffle_word_list.append(word)
 
-    print(seq)
-    new_seq = " ".join(shufflewords_list)
-    print('文字の順番をバラバラにしました。')
-    print(new_seq)
+    shuffle_centence = ' '.join(shuffle_word_list)
+    print(shuffle_centence)
