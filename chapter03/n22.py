@@ -8,8 +8,8 @@ from utils import extraction
 # 例：[[Category:島国|くれいとふりてん]]
 pattern = re.compile(r'^\[\[Category:(.+?)(?:\|.+)?\]\]$')
 
-britain_file = extraction.extract_UK('../data/jawiki-country.json.gz')
-for line in britain_file:
+britain_text = extraction.extract_country_info('../data/jawiki-country.json.gz', 'イギリス')
+for line in britain_text.split('\n'):
     match = pattern.search(line)
     if match:
         print(match.group(1))
