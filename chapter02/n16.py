@@ -7,17 +7,18 @@ import math
 
 split_size = int(argv[1])  # 分割ファイルの個数
 
-with open(argv[2], 'r') as f:
-    # １行ごとにリストに格納
-    lines = f.readlines()
-    # リストの要素数 (行数)
-    lines_length = len(lines)
-    # 均等に分割するために分割ファイル一つあたりの行数を求める
-    lines_length_per_file = math.ceil(lines_length/split_size)  # 切り上げ
+with open('../data/hightemp.txt', 'r') as data_file:
+    lines = data_file.readlines()  # １行毎にリストに格納
+    lines_length_per_file = math.ceil(len(lines)/split_size)  # 切り上げ
 
     line_index = 0
     for i in range(split_size):
-        with open(argv[3]+str(i)+'.txt', 'w') as g:
-            file = lines[line_index:line_index+lines_length_per_file]
-            g.writelines(file)
+        with open(f'../tmp/splited_file{i}.txt', 'w') as output_file:
+            output_file.writelines(lines[line_index:line_index+lines_length_per_file])
             line_index += lines_length_per_file
+
+"""
+linux : split -l 3 ../data/hightemp
+上記のlinuxコマンドは-lで指定した行数ずつに分割する処理を行う。（上記の例では３行ずつ）
+当スクリプト（n16.py）はコマンドライン引数で指定した個数に分割する処理を行う。
+"""

@@ -1,13 +1,10 @@
 """
 行数をカウントせよ．確認にはwcコマンドを用いよ
 """
-from sys import argv
 
+with open('../data/hightemp.txt', 'r') as data_file:
+    print(sum(1 for line in data_file))
 
-def count_len():
-    with open(argv[1]) as f:
-        return sum(1 for line in f)
-
-
-if __name__ == '__main__':
-    print(count_len())
+"""
+linux : wc -l ../data/hightemp
+"""

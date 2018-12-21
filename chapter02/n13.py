@@ -1,16 +1,16 @@
 """
-12で作ったcol1.txtとcol2.txtを結合し，元のファイルの1列目と2列目を
-タブ区切りで並べたテキストファイルを作成せよ．確認にはpasteコマンドを用いよ
+12で作ったcol1.txtとcol2.txtを結合し，
+元のファイルの1列目と2列目をタブ区切りで並べたテキストファイルを作成せよ．
+確認にはpasteコマンドを用いよ．
 """
 
-from sys import argv
-
-
-with open(argv[1], 'r') as f, open(argv[2], 'r') as g, open(argv[3], 'w') as h:
-    elements1 = f.read().strip().split()  # 要素をリストで管理
-    elements2 = g.read().strip().split()  # 要素をリストで管理
+with open('../tmp/col1.txt', 'r') as col1_file, open('../tmp/col2.txt', 'r') as col2_file, open('../tmp/merge.txt', 'w') as merge_file:
+    col1_elements = col1_file.read().strip().split()  # 要素をリストに格納
+    col2_elements = col2_file.read().strip().split()  # 要素をリストに格納
     # ファイルへの書き込み
-    for ele1, ele2 in zip(elements1, elements2):
-        h.write(f'{ele1}\t{ele2}\n')
+    for col1, col2 in zip(col1_elements, col2_elements):
+        merge_file.write(f'{col1}\t{col2}\n')
 
-#  paste col1.txt col2.txt
+"""
+linux : paste ../tmp/col1.txt ../tmp/col2.txt
+"""
