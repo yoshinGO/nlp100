@@ -1,12 +1,12 @@
 """
-タブ1文字につきスペース1文字に置換せよ．確認にはsedコマンド，trコマンド，もしくはexpandコマンドを用いよ
+タブ1文字につきスペース1文字に置換せよ．
+確認にはsedコマンド，trコマンド，もしくはexpandコマンドを用いよ
 """
-from sys import argv
 
+with open('../data/hightemp.txt', 'r') as data_file:
+    for line in data_file:
+        print(line.strip().replace('\t', ' '))
 
-if __name__ == '__main__':
-    with open(argv[1]) as f:
-        for line in f:
-            print(line.strip().replace('\t', ' '))
-
-# cat ../data/highttemp.txt | tr '\t' ' '
+"""
+linux : cat ../data/hightemp.txt | tr '\t' ' '
+"""

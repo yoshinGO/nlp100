@@ -1,12 +1,11 @@
 """
-1列目の文字列の種類（異なる文字列の集合）を求めよ．確認にはsort, uniqコマンドを用いよ
+1列目の文字列の種類（異なる文字列の集合）を求めよ．確認にはsort, uniqコマンドを用いよ．
 """
-from sys import argv
 
-if __name__ == '__main__':
-    with open(argv[1], 'r') as f:
-        elements = f.readlines()
-        unique_ele = set(elements)
-        print(unique_ele)
+with open('../data/hightemp.txt', 'r') as data_file:
+    unique_col1_elements = set([line.strip().split()[0] for line in data_file])
+    print(unique_col1_elements)
 
-# cat ../tmpcol1.txt | sort | uniq
+"""
+linux : cut -f ../data/hightemp.txt | sort | uniq
+"""
