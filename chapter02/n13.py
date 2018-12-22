@@ -5,11 +5,8 @@
 """
 
 with open('../tmp/col1.txt', 'r') as col1_file, open('../tmp/col2.txt', 'r') as col2_file, open('../tmp/merge.txt', 'w') as merge_file:
-    col1_elements = col1_file.read().strip().split()  # 要素をリストに格納
-    col2_elements = col2_file.read().strip().split()  # 要素をリストに格納
-    # ファイルへの書き込み
-    for col1, col2 in zip(col1_elements, col2_elements):
-        merge_file.write(f'{col1}\t{col2}\n')
+    for col1, col2 in zip(col1_file, col2_file):
+        merge_file.write(f'{col1.strip()}\t{col2.strip()}\n')
 
 """
 linux : paste ../tmp/col1.txt ../tmp/col2.txt
