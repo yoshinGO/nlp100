@@ -4,14 +4,14 @@
 import re
 
 
-def remove_markup_internallinks(target):
+def remove_markup(target):
     '''マークアップの除去
-    強調マークアップと内部リンクを除去する
+    強調マークアップを除去する
 
     引数：
     target -- 対象の文字列
     戻り値：
-    強調マークアップと内部リンクを除去した文字列
+    強調マークアップを除去した文字列
     '''
 
     # 強調マークアップの除去
@@ -22,6 +22,18 @@ def remove_markup_internallinks(target):
         ''', re.MULTILINE + re.VERBOSE)
     target = markup_pattern.sub(r'\2', target)
 
+    return target
+
+
+def remove_internallinks(target):
+    '''内部リンクの除去
+    内部リンクを除去する
+
+    引数：
+    target -- 対象の文字列
+    戻り値：
+    内部リンクを除去した文字列
+    '''
     # 内部リンクの削除
     internallinks_pattern = re.compile(r'''
         \[\[      # '[['（マークアップの開始）
@@ -71,7 +83,7 @@ with open('britain.txt', 'r') as britain_file:
         """
         field_valueには ('略名', 'イギリス') や ('確立形態4', "現在の国号「'''グレートブリテン及び北アイルランド連合王国'''」に変更")の形で値が代入される
         """
-        result[field_value[0]] = remove_markup_internallinks(field_value[1])
+        result[field_value[0]] = remove_markup(remove_internallinks(field_value[1]))
         keys_test.append(field_value[0])
 
     # 確認のため表示（確認しやすいようにkeys_testを使ってフィールド名の出現順にソート）

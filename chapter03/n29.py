@@ -1,8 +1,10 @@
 """
-27の処理に加えて，テンプレートの値からMediaWikiマークアップを可能な限り除去し，
-国の基本情報を整形せよ
+テンプレートの内容を利用し，国旗画像のURLを取得せよ．
 """
 import re
+import json
+import urllib.parse
+import urllib.request
 
 
 def remove_markup(target):
@@ -108,6 +110,7 @@ field_value_pattern = re.compile(r'''
     )           # グループ終了
     ''', re.MULTILINE + re.VERBOSE + re.DOTALL)
 
+
 with open('britain.txt', 'r') as britain_file:
     # 基礎情報テンプレートの抽出
     contents = extract_pattern.findall(britain_file.read())  # findallは正規表現にマッチする部分文字列を全て探し出しリストとして返す（インデックスは0ベース）
@@ -116,14 +119,31 @@ with open('britain.txt', 'r') as britain_file:
 
     # 辞書にセット
     result = {}
-    keys_test = []  # 確認用の出現フィールド名リスト
     for field_value in fiels_values:
         """
         field_valueには ('略名', 'イギリス') や ('確立形態4', "現在の国号「'''グレートブリテン及び北アイルランド連合王国'''」に変更")の形で値が代入される
         """
         result[field_value[0]] = remove_markup(remove_internallinks(remove_media(field_value[1])))
-        keys_test.append(field_value[0])
 
-    # 確認のため表示（確認しやすいようにkeys_testを使ってフィールド名の出現順にソート）
-    for item in sorted(result.items(), key=lambda field_value: keys_test.index(field_value[0])):
-        print(item)
+    # 国旗画像の値を取得
+    fname_flag = result['国旗画像']
+
+    # リクエスト生成
+    url = 'https://www.mediawiki.org/w/api.php?' \
+    + 'action=query' \
+    + '&titles=File:' + urllib.parse.quote(fname_flag) \
+    + '&format=json' \
+    + '&prop=imageinfo' \
+    + '&iiprop=url'
+
+    # MediaWikiのサービスへリクエスト送信
+    request = urllib.request.Request(url,
+        headers={'User-Agent': 'NLP100_Python(@segavvy)'})
+    connection = urllib.request.urlopen(request)
+
+    # jsonとして受信
+    data = json.loads(connection.read().decode())
+
+    # URL取り出し
+    url = data['query']['pages'].popitem()[1]['imageinfo'][0]['url']
+    print(url)
