@@ -31,9 +31,8 @@ def neko_lines():
     1文の各形態素を辞書化したリスト
     '''
     with open(fname_parsed) as file_parsed:
-
         morphemes = []
-        for line in file_parsed:
+        for line in file_parsed:  # lineには1形態素が入る
 
             # 表層系はtab区切り, それ以外は','区切り
             cols = line.split('\t')
@@ -48,17 +47,16 @@ def neko_lines():
                 'pos': res_cols[0],
                 'pos1': res_cols[1]
             }
-            morphemes.append(morpheme)
+            morphemes.append(morpheme)  # 句点が現れるまで繰り返す
 
             # 品詞細分類1が''句点'なら文の終わりと判定
             if res_cols[1] == '句点':
-                yield morphemes
+                yield morphemes  # 呼び出し元に句点を返す
                 morphemes = []
 
 
 # 形態素解析
 parse_neko()
 
-# 1文ずつ辞書のリストを作
 for line in neko_lines():
     print(line)
