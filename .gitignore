@@ -2,3 +2,4 @@ __pycache__/
 /tmp/
 requirements.txt
 jawiki-country.json
+neko_retrive.py
