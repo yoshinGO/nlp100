@@ -5,20 +5,20 @@
 第4章の残りの問題では，ここで作ったプログラムを活用せよ．
 """
 import MeCab
-fname = 'neko.txt'
-fname_parsed = 'neko.txt.mecab'
+from constants import FNAME, FNAME_PARSED
 
 
-def parse_neko():
+def mecab_parse(fname):
+    # fname: str -> str
     '''「吾輩は猫である」を形態素解析
     「吾輩は猫である」(neko.txt)を形態素解析してneko.txt.mecabに保存する
     '''
+    with open(fname) as data_file:
+        return MeCab.Tagger().parse(data_file.read())
 
-    with open(fname) as data_file, open(fname_parsed, 'w') as out_file:
-        out_file.write(MeCab.Tagger().parse(data_file.read()))
 
-
-def neko_lines():
+def neko_lines(fname_parsed):
+    # fname_parsed: str -> generator
     '''「吾輩は猫である」の形態素解析結果ジェネレータ
     「吾輩は猫である」の形態素解析結果を順次読み込んで各形態素を
     ・表層系（surface）
@@ -28,7 +28,7 @@ def neko_lines():
     の4つをキーとする辞書に格納し、1文ずつ、この辞書のリストとして返す
 
     戻り値：
-    1文の各形態素を辞書化したリスト
+    1文の各形態素を辞書化したリストを返すジェネレータ
     '''
     with open(fname_parsed) as file_parsed:
         morphemes = []
@@ -56,7 +56,8 @@ def neko_lines():
 
 
 # 形態素解析
-parse_neko()
+with open(FNAME_PARSED, 'w') as out_file:
+    out_file.write(mecab_parse(FNAME))
 
-for line in neko_lines():
+for line in neko_lines(FNAME_PARSED):
     print(line)
