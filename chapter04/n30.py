@@ -55,9 +55,10 @@ def neko_lines(fname_parsed):
                 morphemes = []
 
 
-# 形態素解析
-with open(FNAME_PARSED, 'w') as out_file:
-    out_file.write(mecab_parse(FNAME))
+if __name__ == '__main__':
+    # 形態素解析
+    with open(FNAME_PARSED, 'w') as out_file:
+        out_file.write(mecab_parse(FNAME))
 
-for line in neko_lines(FNAME_PARSED):
-    print(line)
+    for line in neko_lines(FNAME_PARSED):
+        print(line)
