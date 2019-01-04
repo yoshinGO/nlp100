@@ -4,8 +4,9 @@
 from constants import FNAME_PARSED
 from n30 import neko_lines
 
-for line in neko_lines(FNAME_PARSED):
-    if len(line) > 2:
-        for i in range(1, len(line) - 1):
-            if line[i]['surface'] == 'の' and line[i - 1]['pos'] == '名詞' and line[i + 1]['pos'] == '名詞':
-                print(f'{line[i-1]["surface"]}の{line[i+1]["surface"]}')
+for morphemes in neko_lines(FNAME_PARSED):
+    number_of_morpheme = len(morphemes)
+    if number_of_morpheme > 2:
+        for i in range(1, number_of_morpheme - 1):
+            if morphemes[i]['surface'] == 'の' and morphemes[i-1]['pos'] == '名詞' and morphemes[i+1]['pos'] == '名詞':
+                print(f'{morphemes[i-1]["surface"]}の{morphemes[i+1]["surface"]}')
