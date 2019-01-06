@@ -20,7 +20,7 @@ class Chunk:
 
     def __init__(self):
         '''初期化'''
-        self.morphs = []  # 1文の形態素解析結果が格納されているリスト
+        self.morphs = []  # 1文節の形態素解析結果が格納されているリスト
         self.srcs = []
         self.dst = -1
 
@@ -59,7 +59,7 @@ def neko_chunk(fname_parsed):
                 if len(chunks) > 0:
 
                     # chunksをkeyでソートし, valueのみ取り出し
-                    # xを与えるとx[0]を返すためkeyでのソートとなる
+                    # xを与えるとx[0]を返すためkey(idxの番号順)でのソートとなる
                     sorted_tuple = sorted(chunks.items(), key=lambda x: x[0])  # sorted関数の返り値はリスト
                     yield list(zip(*sorted_tuple))[1]  # 文が終わり次第, valueのみを取り出しyieldする.
                     chunks.clear()
@@ -79,11 +79,12 @@ def neko_chunk(fname_parsed):
                     chunks[idx] = Chunk()
                 chunks[idx].dst = dst
 
-                # 係り元のChunkを生成(なければ)そ, 係り元インデックス番号追加
-                if dst != -1:
+                # 係り先のChunkを生成し, 係り元インデックス番号追加
+                if dst != -1:  # dst = -1 というのは係り先の文節が存在しない状態
                     if dst not in chunks:
                         chunks[dst] = Chunk()
                     chunks[dst].srcs.append(idx)  # chunksオブジェクトのsrcsの型はリスト
+                    # 『現在対象の文節』の【係り先の文節の係り元の番号】に『係り元である対象の文節のidx』を入れる
 
             # それ以外の行は形態素解析結果なので, Morphを作りChunkに追加
             else:
@@ -94,6 +95,7 @@ def neko_chunk(fname_parsed):
                 res_cols = cols[1].split(',')
 
                 # Morph作成, リストに追加
+                # idxはelifの処理の段階で獲得しており, 冒頭のidx=-1は更新済みである.
                 chunks[idx].morphs.append(
                     Morph(
                         cols[0],  # surface
