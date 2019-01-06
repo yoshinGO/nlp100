@@ -58,7 +58,7 @@ def neko_chunk(fname_parsed):
                     if dst not in chunks:
                         chunks[dst] = Chunk()
                     chunks[dst].srcs.append(idx)  # chunksオブジェクトのsrcsの型はリスト
-                    # 『現在対象の文節』の【係り先の文節の係り元の番号】に『係り元である対象の文節のidx』を入れる
+                    # 『この文節』の【係り先の文節の係り元の番号】に『係り元であるこの文節のidx』を入れる
 
             # それ以外の行は形態素解析結果なので, Morphを作りChunkに追加
             else:

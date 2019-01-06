@@ -38,3 +38,14 @@ class Chunk:
             if morph.pos != '記号':
                 result += morph.surface
         return result
+
+    def chk_pos(self, pos):
+        '''指定した品詞(pos)を含むかチェックする
+
+        戻り値：
+        品詞(pos)を含む場合はTrue
+        '''
+        for morph in self.morphs:
+            if morph.pos == pos:
+                return True
+        return False
