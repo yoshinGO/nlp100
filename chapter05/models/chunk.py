@@ -21,7 +21,7 @@ class Chunk:
         '''
         for morph in self.morphs:
             surface += morph.surface  # 『吾輩』と『は』を足し合わせて『吾輩は』という一文節が完成する.
-        return f'{surface}\tsrcs{self.srcs}\tdst[{self.dst}]'  # [0]吾輩は	srcs[]	dst[5]
+        return f'{surface}\tsrcs{self.srcs}\tdst[{self.dst}]'  # 吾輩は  srcs[]  dst[5]
 
     def normalized_surface(self):
         '''句読点などの記号をのぞいた表層系
@@ -49,3 +49,36 @@ class Chunk:
             if morph.pos == pos:
                 return True
         return False
+
+    def get_morphs_by_pos(self, pos, pos1=''):
+        '''指定した品詞(pos), 品詞細分類1(pos1)の形態素のリストを返す
+        pos1の指定がない場合はposのみで判定する
+
+        戻り値：
+        形態素(morph)のリスト, 該当形態素がない場合は空のリスト
+        '''
+        if len(pos1) > 0:
+            return [res for res in self.morphs if (res.pos == res) and (res.pos1 == pos1)]
+        else:
+            return [res for res in self.morphs if res.pos == pos]
+
+    # 助詞は英語でpostpositional particle
+    def get_kaku_prt(self):
+        '''助詞を1つ返す
+        複数ある場合は格助詞を優先し, 最後の助詞を返す.
+
+        戻り値：
+        助詞, ない場合は空文字列
+        '''
+        prts = self.get_morphs_by_pos('助詞')
+        if len(prts) > 1:
+
+            # 2つ以上ある場合は, 格助詞を優先
+            kaku_prts = self.get_morphs_by_pos('助詞', '格助詞')
+            if len(kaku_prts) > 0:
+                prts = kaku_prts
+
+        if len(prts) > 0:
+            return prts[-1].surface  # 最後を返す
+        else:
+            return ''
