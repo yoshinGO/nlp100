@@ -82,3 +82,16 @@ class Chunk:
             return prts[-1].surface  # 最後を返す
         else:
             return ''
+
+    def get_sahen_wo(self):
+        '''「サ変接続名詞+を」を含む場合は, その部分の表層系を返す
+
+        戻り値：
+        「サ変接続名詞+を」の文字列, なければ空文字列
+        '''
+        for i, morph in enumerate(self.morphs[0:-1]):
+            # 「サ変接続名詞+助詞の[を]」のパターンを探す
+            if (morph.pos == '名詞') and (morph.pos1 == 'サ変接続') and (self.morphs[i+1].pos == '助詞') and (self.morphs[i+1].surface == 'を'):
+                return morph.surface + self.morphs[i+1].surface
+
+        return ''
