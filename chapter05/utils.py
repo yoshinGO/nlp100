@@ -1,4 +1,4 @@
-import models
+from models import Morph
 
 
 def make_morphs(fname_parsed):
@@ -34,7 +34,7 @@ def make_morphs(fname_parsed):
                 res_cols = cols[1].split(',')
 
                 # Morph作成, リストmorphsに追加
-                morphs.append(models.Morph(
+                morphs.append(Morph(
                     cols[0],  # surface
                     res_cols[6],  # base
                     res_cols[0],  # pos
