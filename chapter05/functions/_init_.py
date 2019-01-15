@@ -1,1 +1,1 @@
-from . import neko_morphs
+from .neko_morphs import neko_morphs

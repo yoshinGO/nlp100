@@ -1,4 +1,7 @@
-def neko_morphs():
+from models import Morph
+
+
+def neko_morphs(fname_parsed):
     '''「吾輩は猫である」の係り受け解析結果のジェネレータ
 
    「吾輩は猫である」の係り受け解析結果を読み込んで,
@@ -7,13 +10,13 @@ def neko_morphs():
     戻り値：
     1文のMorphクラスのリスト(yieldで返す)
     '''
-    with open(FNAME_PARSED) as file_parsed:
-        moprhs = []  # Morphクラスのリスト
+    with open(fname_parsed) as file_parsed:
+        morphs = []  # Morphクラスのリスト
         for line in file_parsed:
 
             # 1文の終了判定
             if line == 'EOS\n':
-                yield moprhs  # 1文が終了するごとにその文の形態素のリストを返し, リストの空にする.
+                yield morphs  # 1文が終了するごとにその文の形態素のリストを返し, リストの空にする.
                 morphs = []
 
             else:
