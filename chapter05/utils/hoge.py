@@ -1,7 +1,7 @@
 from models import Morph
 
 
-def neko_morphs(fname_parsed):
+def make_morphs(fname_parsed):
     '''「吾輩は猫である」の係り受け解析結果のジェネレータ
 
    「吾輩は猫である」の係り受け解析結果を読み込んで,
