@@ -1,4 +1,4 @@
-from models import Morph
+from models import morph
 
 
 def make_morphs(fname_parsed):
