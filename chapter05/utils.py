@@ -67,7 +67,7 @@ def make_chunks(fname_parsed):
                     if len(chunks) > 0:
                         # chunksにChunkオブジェクトを追加する際にバラバラな順番で追加したため、順番通りに要素は並んでいない
                         # chunksをkeyでソートし、valueのみ取り出し
-                        sorted_tuple = sorted(chunks.items(), key=lambda x: x[0])  # keyでソート
+                        sorted_tuple = sorted(chunks.items(), key=lambda x: x[0])  # keyでソート, 返り値はタプルのリスト
                         yield list(zip(*sorted_tuple))[1]  # valueのみ(Chunkオブジェクトのみ)取り出せる(これらのChunkオブジェクトは順番通りになっている)
                         chunks.clear()
 
