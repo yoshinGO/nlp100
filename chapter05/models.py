@@ -43,3 +43,12 @@ class Chunk:
             if morph.pos != '記号':
                 result += morph.surface
         return result
+
+    def chk_pos(self, pos):
+        '''対象の品詞が入っているかチェック
+        戻り値はブーリアン型
+        '''
+        for morph in self.morphs:
+            if morph.pos == pos:
+                return True
+        return False
