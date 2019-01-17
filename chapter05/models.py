@@ -35,3 +35,11 @@ class Chunk:
         for morph in self.morphs:
             surface += morph.surface
         return '{}\tsrcs{}\tdst[{}]'.format(surface, self.srcs, self.dst)
+
+    def normalized_surface(self):
+        '''句読点を除去した表現'''
+        result = ''
+        for morph in self.morphs:
+            if morph.pos != '記号':
+                result += morph.surface
+        return result
