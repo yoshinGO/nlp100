@@ -47,7 +47,7 @@ def make_morphs(fname_parsed):
 
 
 def make_chunks(fname_parsed):
-        '''ジェネレータ, 戻り値は1文のChunkクラスのリスト'''
+        '''ジェネレータ, 戻り値は1文のChunkクラスのリスト(yieldで返す)'''
 
         '''係り受け解析結果の様式(lineにはこれらのうちの１行のみ入っている)
         * 1 2D 0/1 -0.764522
@@ -55,7 +55,7 @@ def make_chunks(fname_parsed):
         は	助詞,係助詞,*,*,*,*,は,ハ,ワ,,
         '''
         with open(fname_parsed) as file_parsed:
-            chunks = dict()  # idx: Chunk という辞書
+            chunks = dict()  # idx: Chunk という形式の辞書
             idx = -1
 
             for line in file_parsed:
@@ -91,7 +91,7 @@ def make_chunks(fname_parsed):
                     if dst != -1:  # 係り先のChunkを生成し, その係り元の番号として今処理の対象となっている文節のインデックス番号を追加
                         if dst not in chunks:
                             chunks[dst] = Chunk()
-                        chunks[dst].srcs.append(idx)
+                        chunks[dst].add_srcs(idx)
 
                 # '*'でもEOS\nでもない行は形態素解析結果なので, Morphを作りchunksに追加
                 else:
@@ -103,7 +103,7 @@ def make_chunks(fname_parsed):
                     res_cols = cols[1].split(',')
 
                     # Morph作成, Chunkオブジェクトのインスタンス変数morphsに生成したMorphを追加
-                    chunks[idx].morphs.append(
+                    chunks[idx].add_morphs(
                         Morph(
                             cols[0],  # surface
                             res_cols[6],  # base

@@ -73,17 +73,9 @@ class Chunk:
     def morphs(self):
         return self._morphs
 
-    @morphs.setter
-    def morphs(self, v):
-        self.morphs = v
-
     @property
     def srcs(self):
         return self._srcs
-
-    @srcs.setter
-    def srcs(self, v):
-        self._srcs = v
 
     @property
     def dst(self):
@@ -92,3 +84,11 @@ class Chunk:
     @dst.setter
     def dst(self, v):
         self._dst = v
+
+    # @morphs.setter
+    def add_morphs(self, v):
+        self._morphs.append(v)
+
+    # @srcs.setter
+    def add_srcs(self, v):
+        self._srcs.append(v)
