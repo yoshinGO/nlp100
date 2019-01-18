@@ -14,7 +14,7 @@ class Morph:
     def __str__(self):
         '''オブジェクトの文字列表現'''
         return 'surface[{}]\tbase[{}]\tpos[{}]pos1[{}]'\
-            .format(self.surface, self.base, self.pos, self.pos1)
+            .format(self._surface, self._base, self._pos, self._pos1)
 
     @property
     def surface(self):
@@ -45,30 +45,6 @@ class Chunk:
         self._srcs = []
         self._dst = -1
 
-    def __str__(self):
-        '''オブジェクトの文字列表現'''
-        surface = ''
-        for morph in self.morphs:
-            surface += morph.surface
-        return '{}\tsrcs{}\tdst[{}]'.format(surface, self.srcs, self.dst)
-
-    def normalized_surface(self):
-        '''句読点を除去した表現'''
-        result = ''
-        for morph in self.morphs:
-            if morph.pos != '記号':
-                result += morph.surface
-        return result
-
-    def chk_pos(self, pos):
-        '''対象の品詞が入っているかチェック
-        戻り値はブーリアン型
-        '''
-        for morph in self.morphs:
-            if morph.pos == pos:
-                return True
-        return False
-
     @property
     def morphs(self):
         return self._morphs
@@ -85,10 +61,32 @@ class Chunk:
     def dst(self, v):
         self._dst = v
 
-    # @morphs.setter
-    def add_morphs(self, v):
+    def add_morph(self, v):
         self._morphs.append(v)
 
-    # @srcs.setter
-    def add_srcs(self, v):
+    def add_src(self, v):
         self._srcs.append(v)
+
+    def __str__(self):
+        '''オブジェクトの文字列表現'''
+        surface = ''
+        for morph in self._morphs:
+            surface += morph._surface
+        return '{}\tsrcs{}\tdst[{}]'.format(surface, self._srcs, self._dst)
+
+    def normalized_surface(self):
+        '''句読点を除去した表現'''
+        result = ''
+        for morph in self._morphs:
+            if morph._pos != '記号':
+                result += morph._surface
+        return result
+
+    def chk_pos(self, pos):
+        '''対象の品詞が入っているかチェック
+        戻り値はブーリアン型
+        '''
+        for morph in self._morphs:
+            if morph._pos == pos:
+                return True
+        return False

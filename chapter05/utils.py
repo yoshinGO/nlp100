@@ -91,7 +91,7 @@ def make_chunks(fname_parsed):
                     if dst != -1:  # 係り先のChunkを生成し, その係り元の番号として今処理の対象となっている文節のインデックス番号を追加
                         if dst not in chunks:
                             chunks[dst] = Chunk()
-                        chunks[dst].add_srcs(idx)
+                        chunks[dst].add_src(idx)
 
                 # '*'でもEOS\nでもない行は形態素解析結果なので, Morphを作りchunksに追加
                 else:
@@ -103,7 +103,7 @@ def make_chunks(fname_parsed):
                     res_cols = cols[1].split(',')
 
                     # Morph作成, Chunkオブジェクトのインスタンス変数morphsに生成したMorphを追加
-                    chunks[idx].add_morphs(
+                    chunks[idx].add_morph(
                         Morph(
                             cols[0],  # surface
                             res_cols[6],  # base
