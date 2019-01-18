@@ -71,15 +71,15 @@ class Chunk:
         '''オブジェクトの文字列表現'''
         surface = ''
         for morph in self._morphs:
-            surface += morph._surface
+            surface += morph.surface
         return '{}\tsrcs{}\tdst[{}]'.format(surface, self._srcs, self._dst)
 
     def normalized_surface(self):
         '''句読点を除去した表現'''
         result = ''
         for morph in self._morphs:
-            if morph._pos != '記号':
-                result += morph._surface
+            if morph.pos != '記号':
+                result += morph.surface
         return result
 
     def chk_pos(self, pos):
@@ -87,6 +87,6 @@ class Chunk:
         戻り値はブーリアン型
         '''
         for morph in self._morphs:
-            if morph._pos == pos:
+            if morph.pos == pos:
                 return True
         return False
