@@ -6,15 +6,31 @@ class Morph:
     '''
     def __init__(self, surface, base, pos, pos1):
         '''初期化'''
-        self.surface = surface
-        self.base = base
-        self.pos = pos
-        self.pos1 = pos1
+        self._surface = surface
+        self._base = base
+        self._pos = pos
+        self._pos1 = pos1
 
     def __str__(self):
         '''オブジェクトの文字列表現'''
         return 'surface[{}]\tbase[{}]\tpos[{}]pos1[{}]'\
             .format(self.surface, self.base, self.pos, self.pos1)
+
+    @property
+    def surface(self):
+        return self._surface
+
+    @property
+    def base(self):
+        return self._base
+
+    @property
+    def pos(self):
+        return self._pos
+
+    @property
+    def pos1(self):
+        return self._pos1
 
 
 class Chunk:
@@ -25,9 +41,9 @@ class Chunk:
     '''
     def __init__(self):
         '''初期化'''
-        self.morphs = []
-        self.srcs = []
-        self.dst = -1
+        self._morphs = []
+        self._srcs = []
+        self._dst = -1
 
     def __str__(self):
         '''オブジェクトの文字列表現'''
@@ -52,3 +68,27 @@ class Chunk:
             if morph.pos == pos:
                 return True
         return False
+
+    @property
+    def morphs(self):
+        return self._morphs
+
+    @morphs.setter
+    def morphs(self, v):
+        self.morphs = v
+
+    @property
+    def srcs(self):
+        return self._srcs
+
+    @srcs.setter
+    def srcs(self, v):
+        self._srcs = v
+
+    @property
+    def dst(self):
+        return self._dst
+
+    @dst.setter
+    def dst(self, v):
+        self._dst = v
