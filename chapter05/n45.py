@@ -24,22 +24,22 @@ if __name__ == '__main__':
     with open('result_n45.txt', mode='w') as out_file:
         for chunks in make_chunks(FNAME_PARSED):
             for chunk in chunks:
+                # 文節内に動詞があるか確認する
                 verbs = chunk.get_by_pos('動詞')
                 if len(verbs) < 1:
                     continue
-                # 文節内(chunk)に動詞がある状態
-                prts = []
-                for src_number in chunk.srcs:
-                    prt = chunks[src_number].get_by_pos('助詞')
-                    if len(prt) > 0:
-                        prts.append(prt[0].surface)
-                    else:
-                        continue
 
-                if len(prts) < 1:
+                # 文節内(chunk)に動詞がある状態
+                particles = []
+                for src_number in chunk.srcs:
+                    particle = chunks[src_number].get_by_pos('助詞')
+                    if len(particle) > 0:
+                        particles.append(particle[0].surface)
+
+                if len(particles) < 1:
                     continue
 
                 out_file.write('{}\t{}\n'.format(
                     verbs[0].base,
-                    ' '.join(prts)
+                    ' '.join(particles)
                 ))
