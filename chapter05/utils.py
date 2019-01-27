@@ -1,6 +1,6 @@
+import re
 from models import Morph
 from models import Chunk
-import re
 
 
 def make_morphs(fname_parsed):
