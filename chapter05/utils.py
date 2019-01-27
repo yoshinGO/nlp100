@@ -1,9 +1,10 @@
+import re
 from models import Morph
 from models import Chunk
-import re
 
 
 def make_morphs(fname_parsed):
+    # fname_parsed: str -> generator
     '''「吾輩は猫である」の係り受け解析結果のジェネレータ
 
    「吾輩は猫である」の係り受け解析結果を読み込んで,
@@ -47,68 +48,69 @@ def make_morphs(fname_parsed):
 
 
 def make_chunks(fname_parsed):
-        '''ジェネレータ, 戻り値は1文のChunkクラスのリスト(yieldで返す)'''
+    # fname_parsed: str -> generator
+    '''ジェネレータ, 戻り値は1文のChunkクラスのリスト(yieldで返す)'''
 
-        '''係り受け解析結果の様式(lineにはこれらのうちの１行のみ入っている)
-        * 1 2D 0/1 -0.764522
-        吾輩	名詞,代名詞,一般,*,*,*,吾輩,ワガハイ,ワガハイ,,
-        は	助詞,係助詞,*,*,*,*,は,ハ,ワ,,
-        '''
-        with open(fname_parsed) as file_parsed:
-            chunks = dict()  # idx: Chunk という形式の辞書
-            idx = -1
+    '''係り受け解析結果の様式(lineにはこれらのうちの１行のみ入っている)
+    * 1 2D 0/1 -0.764522
+    吾輩	名詞,代名詞,一般,*,*,*,吾輩,ワガハイ,ワガハイ,,
+    は	助詞,係助詞,*,*,*,*,は,ハ,ワ,,
+    '''
+    with open(fname_parsed) as file_parsed:
+        chunks = dict()  # idx: Chunk という形式の辞書
+        idx = -1
 
-            for line in file_parsed:
-                # 一文の終了判定
-                # 1文の終了判定
-                if line == 'EOS\n':
+        for line in file_parsed:
+            # 一文の終了判定
+            # 1文の終了判定
+            if line == 'EOS\n':
 
-                    # Chunkのリストを返す
-                    if len(chunks) > 0:
-                        # chunksにChunkオブジェクトを追加する際にバラバラな順番で追加したため、順番通りに要素は並んでいない
-                        # chunksをkeyでソートし、valueのみ取り出し
-                        idx_chunk = sorted(chunks.items(), key=lambda x: x[0])  # keyでソート, 返り値はタプルのリスト
-                        yield list(zip(*idx_chunk))[1]  # valueのみ(Chunkオブジェクトのみ)取り出せる(これらのChunkオブジェクトは順番通りになっている)
-                        chunks.clear()
+                # Chunkのリストを返す
+                if len(chunks) > 0:
+                    # chunksにChunkオブジェクトを追加する際にバラバラな順番で追加したため、順番通りに要素は並んでいない
+                    # chunksをkeyでソートし、valueのみ取り出し
+                    idx_chunk = sorted(chunks.items(), key=lambda x: x[0])  # keyでソート, 返り値はタプルのリスト
+                    yield list(zip(*idx_chunk))[1]  # valueのみ(Chunkオブジェクトのみ)取り出せる(これらのChunkオブジェクトは順番通りになっている)
+                    chunks.clear()
 
-                    else:
-                        yield []
-
-                elif line[0] == '*':
-
-                    # Chunkのインデックス番号と係り先のインデックス番号を取得
-                    '''文頭が'*'の行の様式
-                    * 1 2D 0/1 -0.764522
-                    '''
-                    cols = line.split(' ')
-                    idx = int(cols[1])  # その文節自体のインデックス番号を取得
-                    dst = int(re.search(r'(.*?)D', cols[2]).group(1))  # 正規表現を使ってその文節の係り先の文節のインデックス番号を取得
-
-                    if idx not in chunks:  # 辞書chunksのkeyにidxがないならばChunkを生成し係り先のインデックス番号を追加
-                        chunks[idx] = Chunk()
-                    chunks[idx].dst = dst
-
-                    if dst != -1:  # 係り先のChunkを生成し, その係り元の番号として今処理の対象となっている文節のインデックス番号を追加
-                        if dst not in chunks:
-                            chunks[dst] = Chunk()
-                        chunks[dst].add_src(idx)
-
-                # '*'でもEOS\nでもない行は形態素解析結果なので, Morphを作りchunksに追加
                 else:
-                    '''形態素解析結果の行の様式
-                    吾輩	名詞,代名詞,一般,*,*,*,吾輩,ワガハイ,ワガハイ,,
-                    '''
-                    # 表層系はtab区切り, それ以外は','で区切る
-                    cols = line.split('\t')
-                    res_cols = cols[1].split(',')
+                    yield []
 
-                    # Morph作成, Chunkオブジェクトのインスタンス変数morphsに生成したMorphを追加
-                    chunks[idx].add_morph(
-                        Morph(
-                            cols[0],  # surface
-                            res_cols[6],  # base
-                            res_cols[0],  # pos
-                            res_cols[1],  # pos1
-                        )
+            elif line[0] == '*':
+
+                # Chunkのインデックス番号と係り先のインデックス番号を取得
+                '''文頭が'*'の行の様式
+                * 1 2D 0/1 -0.764522
+                '''
+                cols = line.split(' ')
+                idx = int(cols[1])  # その文節自体のインデックス番号を取得
+                dst = int(re.search(r'(.*?)D', cols[2]).group(1))  # 正規表現を使ってその文節の係り先の文節のインデックス番号を取得
+
+                if idx not in chunks:  # 辞書chunksのkeyにidxがないならばChunkを生成し係り先のインデックス番号を追加
+                    chunks[idx] = Chunk()
+                chunks[idx].dst = dst
+
+                if dst != -1:  # 係り先のChunkを生成し, その係り元の番号として今処理の対象となっている文節のインデックス番号を追加
+                    if dst not in chunks:
+                        chunks[dst] = Chunk()
+                    chunks[dst].add_src(idx)
+
+            # '*'でもEOS\nでもない行は形態素解析結果なので, Morphを作りchunksに追加
+            else:
+                '''形態素解析結果の行の様式
+                吾輩	名詞,代名詞,一般,*,*,*,吾輩,ワガハイ,ワガハイ,,
+                '''
+                # 表層系はtab区切り, それ以外は','で区切る
+                cols = line.split('\t')
+                res_cols = cols[1].split(',')
+
+                # Morph作成, Chunkオブジェクトのインスタンス変数morphsに生成したMorphを追加
+                chunks[idx].add_morph(
+                    Morph(
+                        cols[0],  # surface
+                        res_cols[6],  # base
+                        res_cols[0],  # pos
+                        res_cols[1],  # pos1
                     )
-            raise StopIteration
+                )
+        raise StopIteration

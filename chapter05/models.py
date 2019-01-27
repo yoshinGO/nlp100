@@ -5,6 +5,7 @@ class Morph:
     メンバ変数に持つ
     '''
     def __init__(self, surface, base, pos, pos1):
+        # surface: str, base: str, pos: str, pos1: str
         '''初期化'''
         self._surface = surface
         self._base = base
@@ -59,12 +60,15 @@ class Chunk:
 
     @dst.setter
     def dst(self, v):
+        # v: int
         self._dst = v
 
     def add_morph(self, v):
+        # v: Morph -> None
         self._morphs.append(v)
 
     def add_src(self, v):
+        # v: int -> None
         self._srcs.append(v)
 
     def __str__(self):
@@ -75,6 +79,7 @@ class Chunk:
         return '{}\tsrcs{}\tdst[{}]'.format(surface, self._srcs, self._dst)
 
     def normalized_surface(self):
+        # None -> str
         '''句読点を除去した表現'''
         result = ''
         for morph in self._morphs:
@@ -83,6 +88,7 @@ class Chunk:
         return result
 
     def chk_pos(self, pos):
+        # pos: str -> bool
         '''対象の品詞が入っているかチェック
         戻り値はブーリアン型
         '''
