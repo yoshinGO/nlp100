@@ -61,7 +61,6 @@ def make_chunks(fname_parsed):
         idx = -1
 
         for line in file_parsed:
-            # 一文の終了判定
             # 1文の終了判定
             if line == 'EOS\n':
 

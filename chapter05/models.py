@@ -96,3 +96,9 @@ class Chunk:
             if morph.pos == pos:
                 return True
         return False
+
+    def get_by_pos(self, pos, pos1=''):
+        if len(pos1) > 0:
+            return [res for res in self._morphs if res.pos == pos and res.pos1 == pos1]
+        else:
+            return [res for res in self._morphs if res.pos == pos]
