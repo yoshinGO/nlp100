@@ -17,3 +17,29 @@
 コーパス中で頻出する述語と格パターンの組み合わせ
 「する」「見る」「与える」という動詞の格パターン（コーパス中で出現頻度の高い順に並べよ）
 """
+from utils import make_chunks
+from constants import FNAME_PARSED
+
+if __name__ == '__main__':
+    with open('result_n45.txt', mode='w') as out_file:
+        for chunks in make_chunks(FNAME_PARSED):
+            for chunk in chunks:
+                # 文節内に動詞があるか確認する
+                verb_info = chunk.get_morphs_by_pos('動詞')
+                if len(verb_info) < 1:
+                    continue  # 文節内に動詞が存在しない場合は次の文節へ
+
+                # 文節内(chunk)に動詞がある状態
+                particles = []
+                for src_number in chunk.srcs:
+                    particle_info = chunks[src_number].get_morphs_by_pos('助詞')
+                    if len(particle_info) > 0:
+                        particles.append(particle_info[0].surface)
+
+                if len(particles) < 1:
+                    continue
+
+                out_file.write('{}\t{}\n'.format(
+                    verb_info[0].base,
+                    ' '.join(particles)
+                ))
