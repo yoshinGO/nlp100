@@ -103,3 +103,9 @@ class Chunk:
             return [res for res in self._morphs if res.pos == pos and res.pos1 == pos1]
         else:
             return [res for res in self._morphs if res.pos == pos]
+
+    def target_word(self, word):
+        for morph in self._morphs:
+            if morph.base == word:
+                return True
+        return False
