@@ -16,6 +16,8 @@
 from utils import make_chunks
 from constants import FNAME_PARSED
 
+'''「する」に係っている'''
+
 if __name__ == '__main__':
     with open('result_n47.txt', mode='w') as out_file:
         for chunks in make_chunks(FNAME_PARSED):
@@ -23,11 +25,21 @@ if __name__ == '__main__':
                 verbs_info = chunk.get_morphs_by_pos('動詞')
                 if len(verbs_info) < 1 or (verbs_info[0].surface) != 'する':
                     continue
+                particles = []
+                chunks_attached_by_particle = []
+                for src_number in chunk.srcs:
+                    particles_info = chunks[src_number].get_morphs_by_pos('助詞')
+                    if len(particles_info) > 0:
+                        particles.append(particles_info[0].surface)
+                        chunks_attached_by_particle.append(chunks[src_number].normalized_surface())
+
                 for src_number in chunk.srcs:
                     sahen_noun_info = chunks[src_number].get_morphs_by_pos('名詞', 'サ変接続')
                     if len(sahen_noun_info) > 0 and chunks[src_number].target_word('を'):
-                        out_file.write('{}\t{}\t{}\n'.format(
+                        out_file.write('{}{}{}\t{}\t{}\n'.format(
                             sahen_noun_info[0].surface,
                             'を',
-                            verbs_info[0].base
+                            verbs_info[0].base,
+                            ' '.join(particles),
+                            ' '.join(chunks_attached_by_particle)
                         ))
