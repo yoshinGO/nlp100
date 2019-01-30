@@ -40,6 +40,6 @@ if __name__ == '__main__':
                             sahen_noun_info[0].surface,
                             'を',
                             verbs_info[0].base,
-                            ' '.join(particles),
-                            ' '.join(chunks_attached_by_particle)
+                            ' '.join(particles[:-1]),
+                            ' '.join(chunks_attached_by_particle[:-1])
                         ))
