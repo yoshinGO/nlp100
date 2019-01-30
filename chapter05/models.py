@@ -97,9 +97,18 @@ class Chunk:
                 return True
         return False
 
-    def get_morphs_by_pos(self, pos, pos1=None):
+    def get_morphlist_by_pos(self, pos, pos1=None):
         # pos: str, pos1: str -> list
         if pos1:
             return [res for res in self._morphs if res.pos == pos and res.pos1 == pos1]
         else:
             return [res for res in self._morphs if res.pos == pos]
+
+    def chunk_dst_relation(self, chunks):
+        dst = self._dst
+        chunks_relation = []
+        chunks_relation.append(self.normalized_surface())
+        while dst != -1:
+            chunks_relation.append(chunks[dst].normalized_surface())
+            dst = chunks[dst]._dst
+        return chunks_relation
