@@ -25,14 +25,14 @@ if __name__ == '__main__':
         for chunks in make_chunks(FNAME_PARSED):
             for chunk in chunks:
                 # 文節内に動詞があるか確認する
-                verb_info = chunk.get_morphs_by_pos('動詞')
+                verb_info = chunk.get_morphlist_by_pos('動詞')
                 if len(verb_info) < 1:
                     continue  # 文節内に動詞が存在しない場合は次の文節へ
 
                 # 文節内(chunk)に動詞がある状態
                 particles = []
                 for src_number in chunk.srcs:
-                    particle_info = chunks[src_number].get_morphs_by_pos('助詞')
+                    particle_info = chunks[src_number].get_morphlist_by_pos('助詞')
                     if len(particle_info) > 0:
                         particles.append(particle_info[0].surface)
 
