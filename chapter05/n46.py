@@ -14,7 +14,7 @@
 from utils import make_chunks
 from constants import FNAME_PARSED
 
-with open('result_n46.py', mode='w') as out_file:
+with open('result_n46.txt', mode='w') as out_file:
     if __name__ == '__main__':
         for chunks in make_chunks(FNAME_PARSED):
             for chunk in chunks:
